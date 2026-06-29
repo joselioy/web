@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>imprenta lioy</title>
+
+    <!-- 1. Carga A-Frame original y funcional -->
+    <script src="https://aframe.io"></script>
+
+    <!-- 2. Carga AR.js con soporte NFT específico desde GitHack -->
+    <script src="https://githack.com"></script>
+
+    <style>
+        .arjs-loader {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .arjs-loader div {
+            text-align: center;
+            color: white;
+            font-family: sans-serif;
+            font-size: 1.25em;
+        }
+    </style>
+</head>
+
+<body style="margin: 0px; overflow: hidden;">
+    <!-- Pantalla de carga mientras se procesa el marcador NFT -->
+    <div class="arjs-loader">
+        <div>Cargando marcador, por favor espere...</div>
+    </div>
+
+    <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true; precision: medium;" embedded
+        arjs="trackingMethod: nft; sourceType: webcam; debugUIEnabled: false;">
+
+        <a-assets>
+            <!-- Asegúrate de que esta ruta sea correcta en tu servidor -->
+            <video id="vid3" src="assets/tu_video.mp4" preload="auto" loop crossorigin playsinline
+                webkit-playsinline></video>
+        </a-assets>
+
+        <!-- El atributo 'url' no debe llevar la extensión (.fset, .fset3, etc.) -->
+        <a-nft type="nft" url="assets/descriptors/exe_marker" smooth="true" smoothCount="10" smoothTolerance="0.01"
+            smoothThreshold="5" id="markerA">
+
+            <!-- Video escalado y rotado para que se vea plano sobre la imagen -->
+            <a-video src="#vid3" width="150" height="150" position="0 0 0" rotation="-90 0 0"></a-video>
+        </a-nft>
+
+        <!-- Cámara obligatoria para renderizar la escena de AR -->
+
+    </a-scene>
+
+    <script>
+        // Script para ocultar la pantalla de carga cuando el marcador NFT se lee correctamente
+        window.addEventListener('arjs-nft-loaded', function () {
+            document.querySelector('.arjs-loader').style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
