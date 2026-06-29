@@ -3,45 +3,26 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <title>Imprenta Lioy - AR</title>
+    <title>Imprenta Lioy - AR Hiro</title>
     
-    <!-- Evita el error de favicon -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-    <!-- Librerías con doble servidor de respaldo (Anti-bloqueos) -->
-    <script src="https://cloudflare.com"></script>
-    <script>
-      if (typeof AFRAME === 'undefined') {
-        document.write('<script src="https://aframe.io"><\/script>');
-      }
-    </script>
+    <!-- Librerías oficiales ultra-estables -->
+    <script src="https://aframe.io"></script>
     <script src="https://github.io"></script>
-
-    <style>
-      .arjs-loader {
-        height: 100%; width: 100%; position: absolute; top: 0; left: 0;
-        background-color: rgba(0, 0, 0, 0.8); z-index: 9999;
-        display: flex; justify-content: center; align-items: center;
-      }
-      .arjs-loader div { text-align: center; color: white; font-family: sans-serif; font-size: 1.25em; }
-    </style>
   </head>
 
   <body style="margin: 0px; overflow: hidden;">
-    <!-- Pantalla de carga inicial -->
-    <div class="arjs-loader" id="loadingScreen">
-      <div>Cargando Realidad Aumentada, por favor espere...</div>
-    </div>
 
-    <!-- Escena de Realidad Aumentada con cámara activa -->
+    <!-- Cambiamos el tipo de rastreo a 'pattern' (mucho más rápido y liviano) -->
     <a-scene 
       vr-mode-ui="enabled: false;" 
       renderer="logarithmicDepthBuffer: true; precision: medium;" 
       embedded
-      arjs="trackingMethod: nft; sourceType: webcam; debugUIEnabled: false;">
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
 
       <a-assets>
-        <!-- Asegúrate de que el video esté en assets/erero.mp4 en minúsculas -->
+        <!-- Tu archivo de video en la carpeta assets -->
         <video 
           id="vid3" 
           src="assets/erero.mp4" 
@@ -54,39 +35,25 @@
         </video>
       </a-assets>
 
-      <!-- Rastreador NFT -->
-      <a-nft 
-        type="nft" 
-        url="assets/descriptors/exe_marker" 
-        smooth="true" 
-        smoothCount="10" 
-        smoothTolerance="0.01" 
-        smoothThreshold="5" 
-        id="markerA"
-        registerevents>
+      <!-- Usamos el marcador predeterminado HIRO -->
+      <a-marker preset="hiro" id="markerA" registerevents>
         
-        <!-- Video escalado sobre el marcador -->
+        <!-- El video ahora se escala a tamaño normal (1x1) para encajar en el marcador -->
         <a-video 
           src="#vid3" 
-          width="150" 
-          height="150" 
+          width="2" 
+          height="2" 
           position="0 0 0" 
           rotation="-90 0 0">
         </a-video>
-      </a-nft>
+      </a-marker>
 
-      <!-- Cámara (Obligatoria para que no quede la pantalla en blanco) -->
+      <!-- Cámara obligatoria -->
       
     </a-scene>
 
     <script>
-      // Ocultar pantalla gris cuando cargue el marcador NFT
-      window.addEventListener('arjs-nft-loaded', function () {
-          var loader = document.getElementById('loadingScreen');
-          if(loader) loader.style.display = 'none';
-      });
-
-      // Registrar lógica para reproducir o pausar el video
+      // Controlador para dar play/pausa al video al enfocar el marcador
       if (typeof AFRAME !== 'undefined') {
         AFRAME.registerComponent('registerevents', {
           init: function () {
