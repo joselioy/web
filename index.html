@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>Imprenta Lioy - AR</title>
 
-    <!-- 1. Librerías obligatorias con HTTPS nativo -->
-    <script src="https://aframe.io"></script>
+    <!-- Evitamos el error 404 de favicon agregando un icono genérico por código -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <!-- 1. Librerías obligatorias con HTTPS Seguro NATIVO -->
+    <script src="https://cloudflare.com"></script>
     <script src="https://github.io"></script>
 
     <style>
@@ -33,7 +36,7 @@
       arjs="trackingMethod: nft; sourceType: webcam; debugUIEnabled: false;">
 
       <a-assets>
-        <!-- REVISIÓN: Asegúrate de que el archivo se llame 'erero.mp4' y esté dentro de la carpeta 'assets' -->
+        <!-- IMPORTANTE: El video DEBE llamarse 'erero.mp4' y estar dentro de tu carpeta 'assets' -->
         <video 
           id="vid3" 
           src="assets/erero.mp4" 
@@ -57,7 +60,7 @@
         id="markerA"
         registerevents>
         
-        <!-- Video plano sobre el marcador -->
+        <!-- Plano de video escalado -->
         <a-video 
           src="#vid3" 
           width="150" 
